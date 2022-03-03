@@ -23,14 +23,14 @@ $box-glow-large: 0 0 2px 2px $starlight-light;
 $box-shadow-standard: 0 0 1px 1px $shadow-dark;
 
 $sm-min: 0px;
-$sm-max: 479px;
-$sd-min: 480px;
+$sm-max: 419px;
+$sd-min: 420px;
 $sd-max: 719px;
 $md-min: 720px;
 $md-max: 1023px;
 $lg-min: 1024px;
-$lg-max: 1279px;
-$xl-min: 1280px;
+$lg-max: 1399px;
+$xl-min: 1440px;
 
 @mixin breakpoint($point) {
   @if $point == $xl-min {
@@ -48,14 +48,4 @@ $xl-min: 1280px;
   @else if $point == $sm-min {
     @media (max-width: $sm-max) { min-width: $sm-min; @content ; }
   }
-}
-
-:export {
-  shadowBase: $shadow-base;
-  shadowDark: $shadow-dark;
-  shadowLight: $shadow-light;
-
-  starlightBase: $starlight-base;
-  starlightDark: $starlight-dark;
-  starlightLight: $starlight-light;
 }
