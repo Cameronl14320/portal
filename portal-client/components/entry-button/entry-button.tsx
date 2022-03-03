@@ -1,15 +1,15 @@
-import styles from './entry-button.module.scss';
+import style from './entry-button.module.scss';
 import Link from "next/link";
 
-function EntryButton(props: any) {
+function EntryButton(props: { target: string }) {
     return (
-        <div
-            className={ styles.container }>
-            <Link
-                href=''>
-                ENTER
-            </Link>
-        </div>
+        <Link href={ props.target } passHref>
+            <a>
+                <div className={ style.container }>
+                    ENTER
+                </div>
+            </a>
+        </Link>
     )
 };
 

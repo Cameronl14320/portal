@@ -1,0 +1,26 @@
+@import '../styles/styles.module.scss';
+
+.container {
+    height: 100vh;
+    display: flex;
+
+    @include breakpoint($sm-min) {
+        background-color: red;
+    }
+
+    @include breakpoint($sd-min) {
+        background-color: blue;
+    }
+
+    @include breakpoint($md-min) {
+        background-color: green;
+    }
+
+    @include breakpoint($lg-min) {
+        background-color: orange;
+    }
+
+    @include breakpoint($xl-min) {
+        background-color: black;
+    }
+};

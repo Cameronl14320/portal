@@ -18,14 +18,44 @@ $font-size-small: 0.7rem;
 $font-weight-strongest: 700;
 $font-weight-strong: 600;
 
-$box-glow-standard: 0 0 1px 1px $starlight-light;
+$box-glow-standard: 0 0 1px 1px $starlight-base;
+$box-glow-large: 0 0 2px 2px $starlight-light;
 $box-shadow-standard: 0 0 1px 1px $shadow-dark;
 
-:export {
-    shadowBase: $shadow-base;
-    shadowDark: $shadow-dark;
-    shadowLight: $shadow-light;
+$sm-min: 0px;
+$sm-max: 479px;
+$sd-min: 480px;
+$sd-max: 719px;
+$md-min: 720px;
+$md-max: 1023px;
+$lg-min: 1024px;
+$lg-max: 1279px;
+$xl-min: 1280px;
 
-    starlightBase: $starlight-base;
-    starlightDark: $starlight-dark;
+@mixin breakpoint($point) {
+  @if $point == $xl-min {
+    @media (min-width: $xl-min) { @content ; }
+  }
+  @else if $point == $lg-min {
+    @media (min-width: $lg-min) { @content ; }
+  }
+  @else if $point == $md-min {
+    @media (min-width: $md-min) { @content ; }
+  }
+  @else if $point == $sd-min {
+    @media (min-width: $sd-min) { @content ; }
+  }
+  @else if $point == $sm-min {
+    @media (max-width: $sm-max) { min-width: $sm-min; @content ; }
+  }
+}
+
+:export {
+  shadowBase: $shadow-base;
+  shadowDark: $shadow-dark;
+  shadowLight: $shadow-light;
+
+  starlightBase: $starlight-base;
+  starlightDark: $starlight-dark;
+  starlightLight: $starlight-light;
 }

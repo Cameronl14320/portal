@@ -5,11 +5,13 @@
     color: $starlight-base;
     font-size: $font-size-title;
     font-weight: $font-weight-strongest;
-    border: 1px solid $starlight-base;
     box-shadow: $box-glow-standard;
+    border: 1px solid $starlight-base;
+    user-select: none;
+    transition-duration: 0.05s;
+}
 
-    :hover {
-        color: $starlight-light;
-        border: 1px solid $starlight-light;
-    }
+.container:hover {
+    color: $starlight-light;
+    border: 2px solid $starlight-light;
 }
