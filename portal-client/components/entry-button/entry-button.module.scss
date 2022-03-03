@@ -1,0 +1,15 @@
+@import '../../styles/styles.module.scss';
+
+.container {
+    padding: $portal-unit $portal-double-unit;
+    color: $starlight-base;
+    font-size: $font-size-title;
+    font-weight: $font-weight-strongest;
+    border: 1px solid $starlight-base;
+    box-shadow: $box-glow-standard;
+
+    :hover {
+        color: $starlight-light;
+        border: 1px solid $starlight-light;
+    }
+}
