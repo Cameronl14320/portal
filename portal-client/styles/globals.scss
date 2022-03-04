@@ -40,11 +40,13 @@ a {
 }
 
 .title {
+  color: $shadow-dark;
   font-size: $font-size-title;
   font-weight: $font-weight-strongest;
 }
 
 .subtitle {
+  color: $shadow-dark;
   font-size: $font-size-subtitle;
   font-weight: $font-weight-strong;
 }

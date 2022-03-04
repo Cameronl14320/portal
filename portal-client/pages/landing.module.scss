@@ -10,7 +10,16 @@
     display: flex;
 }
 
+.subtitle {
+    text-align: center;
+
+    @include breakpoint($md-min) {
+        text-align: start;
+    }
+}
+
 .profileCard {
+    width: 100%;
     display: flex;
     flex-direction: column;
 
@@ -30,13 +39,15 @@
 
 .profileCardPrimary {
     width: 40%;
+    background-color: $shadow-light;
     border-top-left-radius: $portal-unit;
     border-bottom-left-radius: $portal-unit;
 }
 
 .profileCardSecondary {
     width: 100%;
-    background-color: red;
+    background-color: $starlight-base;
+    color: $shadow-dark;
     border-top-right-radius: $portal-unit;
     border-bottom-right-radius: $portal-unit;
 }
