@@ -49,3 +49,16 @@ $xl-min: 1440px;
     @media (max-width: $sm-max) { min-width: $sm-min; @content ; }
   }
 }
+
+:export {
+  portalUnit: $portal-unit;
+  portalDoubleUnit: $portal-double-unit;
+  
+  starlightBase: $starlight-base;
+  starlightLight: $starlight-light;
+  starlightDark: $starlight-dark;
+
+  shadowBase: $shadow-base;
+  shadowLight: $shadow-light;
+  shadowDark: $shadow-dark;
+}

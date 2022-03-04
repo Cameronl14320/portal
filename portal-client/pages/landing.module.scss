@@ -3,24 +3,40 @@
 .container {
     height: 100vh;
     display: flex;
+    background-color: $shadow-base;
+};
 
-    @include breakpoint($sm-min) {
-        background-color: red;
-    }
+.content {
+    display: flex;
+}
 
-    @include breakpoint($sd-min) {
-        background-color: blue;
-    }
+.profileCard {
+    display: flex;
+    flex-direction: column;
 
     @include breakpoint($md-min) {
-        background-color: green;
+        flex-direction: row;
+        justify-content: space-between;
     }
+}
 
-    @include breakpoint($lg-min) {
-        background-color: orange;
-    }
+.profileCardInfo {
+    margin: $portal-unit;
 
-    @include breakpoint($xl-min) {
-        background-color: black;
+    @include breakpoint($md-min) {
+        margin: $portal-double-unit;
     }
-};
+}
+
+.profileCardPrimary {
+    width: 40%;
+    border-top-left-radius: $portal-unit;
+    border-bottom-left-radius: $portal-unit;
+}
+
+.profileCardSecondary {
+    width: 100%;
+    background-color: red;
+    border-top-right-radius: $portal-unit;
+    border-bottom-right-radius: $portal-unit;
+}

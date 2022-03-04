@@ -6,6 +6,7 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-size: $font-size-base;
 }
 
 a {
@@ -17,26 +18,33 @@ a {
   box-sizing: border-box;
 }
 
-.l-container {
+.margin-container {
   width: 100%;
+  margin: $portal-double-unit;
 
   @include breakpoint($sd-min) {
-    margin: 0 50px;
-    background-color: red;
+    margin: $portal-double-unit $portal-unit * 13;
   }
 
   @include breakpoint($md-min) {
-    margin: 0 100px;
-    background-color: blue;
+    margin: $portal-double-unit $portal-unit * 26;
   }
 
   @include breakpoint($lg-min) {
-    margin: 0 200px;
-    background-color: pink;
+    margin: $portal-double-unit $portal-unit * 50;
   }
 
   @include breakpoint($xl-min) {
-    margin: 0 400px;
-    background-color: violet;
+    margin: $portal-double-unit $portal-unit * 100;
   }
+}
+
+.title {
+  font-size: $font-size-title;
+  font-weight: $font-weight-strongest;
+}
+
+.subtitle {
+  font-size: $font-size-subtitle;
+  font-weight: $font-weight-strong;
 }
