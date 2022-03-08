@@ -1,6 +1,5 @@
 import style from './landing.module.scss';
 import Card from '../components/card/card';
-import colors from '../styles/styles.module.scss';
 import Image from 'next/image';
 
 const landingCardStyle = {
