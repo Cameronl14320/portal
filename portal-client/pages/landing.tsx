@@ -1,5 +1,6 @@
 import style from './landing.module.scss';
 import Card from '../components/card/card';
+import globalStyles from '../styles/styles.module.scss';
 import Image from 'next/image';
 
 const landingCardStyle = {
@@ -13,6 +14,9 @@ function Landing(props: any) {
     return (
         <div className={ style.container }>
             <div className='margin-container'>
+                <div className={ style.pageTitle }>
+                    Header 1
+                </div>
                 <div className={ style.content }>
                     <Card style={ landingCardStyle }>
                         <div className={ style.profileCard }>

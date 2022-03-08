@@ -10,6 +10,19 @@
     display: flex;
 }
 
+.pageTitle {
+    color: $starlight-base;
+    font-size: $font-size-subtitle;
+    font-weight: $font-weight-strongest;
+    margin: $portal-margin-standard 0;
+    text-align: center;
+
+    @include breakpoint($md-min) {
+        font-size: $font-size-title;
+        text-align: start;
+    }
+}
+
 .subtitle {
     text-align: center;
 
@@ -30,10 +43,14 @@
 }
 
 .profileCardInfo {
-    margin: $portal-unit;
+    margin: $portal-double-unit;
 
     @include breakpoint($md-min) {
-        margin: $portal-double-unit;
+        margin: $portal-margin-standard;
+    }
+
+    @include breakpoint($xl-min) {
+        margin: $portal-margin-large;
     }
 }
 
