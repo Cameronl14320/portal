@@ -8,6 +8,7 @@
 
 .content {
     display: flex;
+    flex-direction: column;
 }
 
 .pageTitle {
@@ -23,12 +24,29 @@
     }
 }
 
+.pageSubtitle {
+    color: $starlight-base;
+    font-size: $font-size-subtitle;
+    font-weight: $font-weight-strong;
+    margin: $portal-margin-standard 0;
+    text-align: center;
+
+    @include breakpoint($md-min) {
+        text-align: start;
+    }
+}
+
 .subtitle {
     text-align: center;
 
     @include breakpoint($md-min) {
         text-align: start;
     }
+}
+
+.stripe {
+    display: flex;
+    background-color: $shadow-dark;
 }
 
 .profileCard {
