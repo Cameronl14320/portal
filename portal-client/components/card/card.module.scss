@@ -3,4 +3,5 @@
 .container {
     display: flex;
     border-radius: $portal-unit;
+    overflow: hidden;
 }

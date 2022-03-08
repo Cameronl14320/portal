@@ -38,16 +38,33 @@
 }
 
 .profileCardPrimary {
-    width: 40%;
-    background-color: $shadow-light;
-    border-top-left-radius: $portal-unit;
-    border-bottom-left-radius: $portal-unit;
+    display: flex;
+    background-color: $starlight-dark;
+
+    @include breakpoint($md-min) {
+        width: 40%;
+    }
+}
+
+.profileCardImage {
+    width: 60%;
+    border-radius: $portal-double-unit;
+    overflow: hidden;
+
+    @include breakpoint($sd-min) {
+        width: 40%;
+    }
+    
+    @include breakpoint($md-min) {
+        width: 100%;
+    }
 }
 
 .profileCardSecondary {
-    width: 100%;
     background-color: $starlight-base;
     color: $shadow-dark;
-    border-top-right-radius: $portal-unit;
-    border-bottom-right-radius: $portal-unit;
+
+    @include breakpoint($md-min) {
+        width: 100%;
+    }
 }
