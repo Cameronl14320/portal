@@ -9,6 +9,7 @@ const nextConfig = {
   images: {
     domains: ['placekitten.com'],
   },
+  distDir: 'build'
 };
 
 module.exports = nextConfig;
