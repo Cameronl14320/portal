@@ -13,7 +13,7 @@ portal-client/.next
 portal-client/out/
 
 # production
-/build
+portal-client/build
 
 # misc
 .DS_Store
