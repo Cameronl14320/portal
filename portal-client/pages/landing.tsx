@@ -20,7 +20,7 @@ function Landing(props: any) {
                             <div className={ style.profileCardPrimary}>
                                 <div className={ style.profileCardInfo } style={{ display: 'flex', flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                                     <div className= { style.profileCardImage }>
-                                        <Image src='http://placekitten.com/300/300' width='150px' height='150px' layout='responsive'></Image>
+                                        <Image src='http://placekitten.com/300/300' alt='profile card image' width='150px' height='150px' layout='responsive'></Image>
                                     </div>
                                 </div>
                             </div>
