@@ -1,5 +1,6 @@
 import style from './landing.module.scss';
 import Card from '../components/card/card';
+import Stripe from '../components/stripe/stripe';
 import globalStyles from '../styles/styles.module.scss';
 import Image from 'next/image';
 
@@ -14,34 +15,34 @@ function Landing(props: any) {
     return (
         <div className={ style.container }>
             <div className={ style.content }>
-                    <div className={ style.pageTitle }>
-                            Header 1
+                <Stripe backgroundColor={ globalStyles.shadowBase }>
+                    <div className={ style.pageTitle } style={{ color: globalStyles.starlightBase }}>
+                        Header 1
                     </div>
-                <div className={ style.stripe }>
-                    <div className='margin-container'>
-                        <Card style={ landingCardStyle }>
-                            <div className={ style.profileCard }>
-                                <div className={ style.profileCardPrimary}>
-                                    <div className={ style.profileCardInfo } style={{ display: 'flex', flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                                        <div className= { style.profileCardImage }>
-                                            <Image src='http://placekitten.com/300/300' alt='profile card image' width='150px' height='150px' layout='responsive'></Image>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className={ style.profileCardSecondary }>
-                                    <div className={ style.profileCardInfo }>
-                                        <div className={ style.subtitle }>
-                                            <div className='subtitle'>{ profileCardTitle }</div>
-                                        </div>
-                                        <div>
-                                            { profileCardDescription }
-                                        </div>
+                </Stripe>
+                <Stripe backgroundColor={ globalStyles.shadowDark }>
+                    <Card style={ landingCardStyle }>
+                        <div className={ style.profileCard }>
+                            <div className={ style.profileCardPrimary}>
+                                <div className={ style.profileCardInfo } style={{ display: 'flex', flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                                    <div className= { style.profileCardImage }>
+                                        <Image src='http://placekitten.com/300/300' alt='profile card image' width='150px' height='150px' layout='responsive'></Image>
                                     </div>
                                 </div>
                             </div>
-                        </Card>
-                    </div>
-                </div>
+                            <div className={ style.profileCardSecondary }>
+                                <div className={ style.profileCardInfo }>
+                                    <div className={ style.subtitle }>
+                                        <div className='subtitle'>{ profileCardTitle }</div>
+                                    </div>
+                                    <div>
+                                        { profileCardDescription }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </Card>
+                </Stripe>
                 <div className={ style.pageSubtitle }>
                     Header 2    
                 </div>

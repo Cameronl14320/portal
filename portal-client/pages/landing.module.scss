@@ -1,7 +1,6 @@
 @import '../styles/styles.module.scss';
 
 .container {
-    height: 100vh;
     display: flex;
     background-color: $shadow-base;
 };
@@ -9,13 +8,14 @@
 .content {
     display: flex;
     flex-direction: column;
+    min-height: 100vh;
+    height: 100%;
 }
 
 .pageTitle {
-    color: $starlight-base;
     font-size: $font-size-subtitle;
     font-weight: $font-weight-strongest;
-    margin: $portal-margin-standard 0;
+    margin: $portal-margin-standard 0 $portal-double-unit 0;
     text-align: center;
 
     @include breakpoint($md-min) {
@@ -25,7 +25,6 @@
 }
 
 .pageSubtitle {
-    color: $starlight-base;
     font-size: $font-size-subtitle;
     font-weight: $font-weight-strong;
     margin: $portal-margin-standard 0;
