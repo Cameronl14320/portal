@@ -1,0 +1,29 @@
+{
+    "artworks":[
+        {
+            "name": "Place Kitten Alpha",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam tincidunt ullamcorper nisl vitae lobortis. Curabitur semper est vitae elit pulvinar, accumsan suscipit nunc dapibus. Nulla.",
+            "url": "https://placekitten.com/100/100"
+        },
+        {
+            "name": "Place Kitten Beta",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas faucibus enim quam, vitae iaculis lorem condimentum non. Fusce in mauris arcu. Aenean quis dignissim magna.",
+            "url": "https://placekitten.com/200/200"
+        },
+        {
+            "name": "Place Kitten Charlie",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque dictum vulputate metus, euismod vestibulum nunc viverra eget. In hac habitasse platea dictumst. Sed in turpis.",
+            "url": "https://placekitten.com/300/300"
+        },
+        {
+            "name": "Place Kitten Delta",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida congue scelerisque. Praesent accumsan, metus a sodales molestie, libero turpis tincidunt mauris, quis cursus odio.",
+            "url": "https://placekitten.com/400/400"
+        },
+        {
+            "name": "Place Kitten Foxtrot",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam laoreet ipsum vitae varius aliquam. Aliquam tempor maximus magna, ut eleifend turpis porta ac. Aenean iaculis.",
+            "url": "https://placekitten.com/500/500"
+        }
+    ]
+}

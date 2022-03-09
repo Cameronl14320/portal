@@ -3,21 +3,40 @@ import Card from '../components/card/card';
 import Stripe from '../components/stripe/stripe';
 import globalStyles from '../styles/styles.module.scss';
 import Image from 'next/image';
+import { getData } from './api/art';
+import { useEffect, useState } from 'react';
 
 const landingCardStyle = {
     width: '100%'
 };
 
-function Landing(props: any) {
+export default function Landing(props: any) {
     const profileCardTitle = 'Who am I?';
     const profileCardDescription = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vel erat vel ipsum facilisis tristique. Sed mattis nisl eu erat finibus blandit. Nullam fringilla sodales nunc eget euismod. Fusce a enim volutpat, efficitur neque posuere, euismod leo. Integer aliquam, libero quis convallis tristique, ligula justo consectetur sapien, ac condimentum purus enim a erat. Sed rutrum sagittis ante eget tristique. Integer tincidunt elit vel purus iaculis, a tincidunt est rhoncus. Maecenas metus augue, molestie et urna quis, tempor commodo tortor.';
+    
+    const [artworks, setArtworks] = useState(null);
+    const [isArtworksLoading, setArtworksLoading] = useState(false);
+
+    useEffect(() => {
+        setArtworksLoading(true);
+        fetch('api/art')
+            .then((res) => res.json())
+            .then((data) => {
+                setArtworks(data);
+                setArtworksLoading(false);
+            });
+    }, []);
+
+    useEffect(() => {
+        console.log(artworks);
+    }, [artworks])
 
     return (
         <div className={ style.container }>
             <div className={ style.content }>
                 <Stripe backgroundColor={ globalStyles.shadowBase }>
                     <div className={ style.pageTitle } style={{ color: globalStyles.starlightBase }}>
-                        Header 1
+                        Card + Stripe Component
                     </div>
                 </Stripe>
                 <Stripe backgroundColor={ globalStyles.shadowDark }>
@@ -54,4 +73,8 @@ function Landing(props: any) {
     )
 }
 
-export default Landing;
+export async function getServerSideProps() {
+    const data = await getData();
+
+    return { props: { data } }
+}
