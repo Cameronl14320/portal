@@ -1,15 +1,20 @@
 import { Artwork } from "../../data/datatypes";
+import ArtworkCard from "./artwork/artwork-card";
+import style from './gallery.module.scss';
 
 export default function Gallery(props: { artworks: Artwork[] | null }) {
     const { artworks } = props;
     if (artworks) {
-        console.log(artworks);
-        // const artworkCards = artworks.forEach(artwork => {
-        //     console.log(artwork);
-        // });
+        const artworkCards = artworks.map(artwork => {
+            return (
+                <ArtworkCard data={ artwork } key={ artwork.name }></ArtworkCard>
+            )
+        })
         return (
-            <div>
-                Loaded
+            <div className={ style.container }>
+                <div className={ style.content }>
+                    { artworkCards }
+                </div>
             </div>
         );
     }

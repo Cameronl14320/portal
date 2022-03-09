@@ -31,11 +31,11 @@ a {
   }
 
   @include breakpoint($lg-min) {
-    margin: $portal-double-unit $portal-unit * 50;
+    margin: $portal-double-unit $portal-unit * 40;
   }
 
   @include breakpoint($xl-min) {
-    margin: $portal-double-unit $portal-unit * 100;
+    margin: $portal-double-unit $portal-unit * 50;
   }
 }
 

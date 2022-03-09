@@ -1,0 +1,11 @@
+@import '../../../styles/styles.module.scss';
+
+.container {
+    background-color: $starlight-base;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    margin: $portal-double-unit;
+}

@@ -1,0 +1,21 @@
+@import '../../styles/styles.module.scss';
+
+.container {
+    display: flex;
+}
+
+.content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 1fr);
+    grid-template-rows: repeat(autofit, 1fr);
+    grid-gap: 10px;
+
+    @include breakpoint($sd-min) {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+
+    @include breakpoint($md-min) {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+
+    }
+}
