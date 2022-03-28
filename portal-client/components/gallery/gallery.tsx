@@ -8,8 +8,8 @@ import globalStyles from '../../styles/styles.module.scss';
 export default function Gallery(props: { artworks: Artwork[] | null }) {
     const { artworks } = props;
     const { width, height } = useWindowDimensions();
-    const [cardsInRow, setCardsInRow] = useState(calculateCardsInRow())
-    const galleryCards = [];
+    const [ cardsInRow, setCardsInRow ] = useState(calculateCardsInRow())
+    const [ galleryCards, setGalleryCards ] = useState<any[]>([]);
     const ref = useRef<HTMLHeadingElement>(null);
 
 
@@ -26,13 +26,20 @@ export default function Gallery(props: { artworks: Artwork[] | null }) {
     };
 
     useEffect(() => {
-        console.log('width', ref.current ? ref.current.offsetWidth : 0);
-    }, [ref.current]);
-
-    useEffect(() => {
         setCardsInRow(calculateCardsInRow());
-        console.log(cardsInRow);
-    }, [width]);
+        if (artworks && ref.current?.offsetWidth) {
+            let totalWidth = 0;
+            let maxHeight = 0;
+            artworks.forEach(artwork => {
+                totalWidth += artwork.width;
+                maxHeight = Math.max(maxHeight, artwork.height)
+            })
+            let optimalHeight = Math.round(maxHeight * (ref.current.offsetWidth / totalWidth));
+            const resizedGalleryCards = artworks.map(artwork => {
+
+            })
+        }
+    }, [ref.current, ref.current?.offsetWidth]);
 
     useEffect(() => {
         let total = artworks?.length;
@@ -45,9 +52,9 @@ export default function Gallery(props: { artworks: Artwork[] | null }) {
             )
         })
         return (
-            <div className={ style.container }>
+            <div className={ style.container } ref={ref}>
                 <div className={ style.content }>
-                    { artworkCards }
+                    { galleryCards }
                 </div>
             </div>
         );
