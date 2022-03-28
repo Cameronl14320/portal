@@ -1,11 +1,14 @@
 @import '../../../styles/styles.module.scss';
 
 .container {
-    background-color: $starlight-base;
+    display: inline-block;
 }
 
 .content {
-    display: flex;
     flex-direction: column;
-    margin: $portal-double-unit;
+}
+
+.imageContainer {
+    display: flex;
+    max-height: 300px;
 }

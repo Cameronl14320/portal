@@ -19,23 +19,22 @@ a {
 }
 
 .margin-container {
-  width: 100%;
   margin: $portal-double-unit;
 
   @include breakpoint($sd-min) {
-    margin: $portal-double-unit $portal-unit * 13;
+    margin: $portal-double-unit 5%;
   }
 
   @include breakpoint($md-min) {
-    margin: $portal-double-unit $portal-unit * 26;
+    margin: $portal-double-unit 8%;
   }
 
   @include breakpoint($lg-min) {
-    margin: $portal-double-unit $portal-unit * 40;
+    margin: $portal-double-unit 15%;
   }
 
   @include breakpoint($xl-min) {
-    margin: $portal-double-unit $portal-unit * 50;
+    margin: $portal-double-unit 15%;
   }
 }
 

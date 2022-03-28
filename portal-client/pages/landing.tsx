@@ -30,11 +30,11 @@ export default function Landing(props: any) {
     return (
         <div className={ style.container }>
             <div className={ style.content }>
-                <Stripe backgroundColor={ globalStyles.shadowBase }>
+                <div className='margin-container'>
                     <div className={ style.pageTitle } style={{ color: globalStyles.starlightBase }}>
                         Card + Stripe Component
                     </div>
-                </Stripe>
+                </div>
                 <Stripe backgroundColor={ globalStyles.shadowDark }>
                     <Card style={ landingCardStyle }>
                         <div className={ style.profileCard }>
@@ -58,11 +58,11 @@ export default function Landing(props: any) {
                         </div>
                     </Card>
                 </Stripe>
-                <Stripe backgroundColor={ globalStyles.shadowBase }>
+                <div className='margin-container'>
                     <div className={ style.pageTitle } style={{ color: globalStyles.starlightBase }}>
                         Art Gallery
                     </div>
-                </Stripe>
+                </div>
                 <Stripe backgroundColor={ globalStyles.shadowDark }>
                     <Gallery artworks={ artworks }></Gallery>
                 </Stripe>
