@@ -66,6 +66,11 @@ export default function Landing(props: any) {
                 <Stripe backgroundColor={ globalStyles.shadowDark }>
                     <Gallery artworks={ artworks }></Gallery>
                 </Stripe>
+                <div className='margin-container'>
+                    <div className={ style.pageTitle } style={{ color: globalStyles.starlightBase }}>
+                        Algorithms
+                    </div>
+                </div>
             </div>
         </div>
     )

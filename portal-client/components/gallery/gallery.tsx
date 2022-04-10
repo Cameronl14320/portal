@@ -26,6 +26,14 @@ export default function Gallery(props: { artworks: Artwork[] | null }) {
     };
 
     useEffect(() => {
+        const initialGalleryCards = artworks ? artworks.map(() => {
+            <div>
+            </div>
+        }) : [];
+        setGalleryCards(initialGalleryCards);
+    }, [])
+
+    useEffect(() => {
         setCardsInRow(calculateCardsInRow());
         if (artworks && ref.current?.offsetWidth) {
             let totalWidth = 0;
@@ -33,11 +41,14 @@ export default function Gallery(props: { artworks: Artwork[] | null }) {
             artworks.forEach(artwork => {
                 totalWidth += artwork.width;
                 maxHeight = Math.max(maxHeight, artwork.height)
-            })
+            });
             let optimalHeight = Math.round(maxHeight * (ref.current.offsetWidth / totalWidth));
             const resizedGalleryCards = artworks.map(artwork => {
-
-            })
+                return (
+                    <ArtworkCard data={ artwork } key={ artwork.name }></ArtworkCard>
+                )
+            });
+            setGalleryCards(resizedGalleryCards);
         }
     }, [ref.current, ref.current?.offsetWidth]);
 
@@ -46,11 +57,6 @@ export default function Gallery(props: { artworks: Artwork[] | null }) {
     }, [cardsInRow]);
 
     if (artworks) {
-        const artworkCards = artworks.map(artwork => {
-            return (
-                <ArtworkCard data={ artwork } key={ artwork.name }></ArtworkCard>
-            )
-        })
         return (
             <div className={ style.container } ref={ref}>
                 <div className={ style.content }>
