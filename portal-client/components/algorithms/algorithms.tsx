@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 export enum algorithms {
     DJIKSTRAS = 0,
     A_STAR_SEARCH = 1
@@ -38,13 +40,14 @@ export default function Algorithms(props: parameters) {
         }
     }
 
-    const currentState: state = {
+    const [currentState, setCurrentState] = useState<state>({
         algorithm: algorithms.DJIKSTRAS,
         start: undefined,
         end: undefined,
         board: initBoard,
         running: runningState.WAITING
-    }
+    });
+
     return (
         <div>
             Hello

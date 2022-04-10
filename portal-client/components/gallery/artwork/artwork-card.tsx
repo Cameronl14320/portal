@@ -4,7 +4,7 @@ import style from './artwork-card.module.scss';
 import globalStyles from '../../../styles/styles.module.scss';
 import Image from "next/image";
 
-export default function ArtworkCard(props: { data: Artwork | null }) {
+export default function ArtworkCard(props: { data: Artwork | null, }) {
     if (props.data) {
         const artwork = props.data;
         return (
