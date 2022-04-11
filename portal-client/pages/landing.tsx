@@ -7,6 +7,7 @@ import { getData } from './api/art';
 import { useEffect, useState } from 'react';
 import Gallery from '../components/gallery/gallery';
 import { Artwork } from '../data/datatypes';
+import Algorithms from '../components/algorithms/algorithms';
 
 const landingCardStyle = {
     width: '100%'
@@ -71,6 +72,9 @@ export default function Landing(props: any) {
                         Algorithms
                     </div>
                 </div>
+                <Stripe backgroundColor={ globalStyles.shadowDark }>
+                    <Algorithms width={10} height={10}></Algorithms>
+                </Stripe>
             </div>
         </div>
     )
