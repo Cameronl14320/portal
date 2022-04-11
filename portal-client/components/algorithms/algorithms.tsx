@@ -71,27 +71,24 @@ export default function Algorithms(props: parameters) {
     }, [])
 
     useEffect(() => {
-        const tempDisplay: any[][] = [];
+        const display: any[] = [];
         if (currentBoardState?.board) {
             const currentBoard = currentBoardState.board;
             currentBoard.forEach((row, rowIndex) => {
-                tempDisplay.push([]);
+                let tempCol: any[] = [];
                 row.forEach((col, colIndex) => {
-                    tempDisplay[rowIndex].push(
-                        <div key={'algorithms-board-' + rowIndex + '-' + colIndex} style={{color: 'white'}}>
+                    tempCol.push(
+                        <div key={'algorithms-board-tile-' + rowIndex + '-' + colIndex} style={{color: 'white'}}>
                             {rowIndex},{colIndex}|
                         </div>
                     )
                 })
-            });
-            const display: any[] = [];
-            tempDisplay.forEach(row => {
                 display.push(
-                    <div style={{ display: 'flex' }}>
-                        {row}
+                    <div key={'algorithms-board-row-' + rowIndex} style={{ display: 'flex' }}>
+                        {tempCol}
                     </div>
-                )
-            })
+                );
+            });
             setDisplayBoard(display);
         }
     }, [currentBoardState])
