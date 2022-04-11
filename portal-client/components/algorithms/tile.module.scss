@@ -1,0 +1,9 @@
+@import '../styles/styles.module.scss';
+
+.container {
+    margin: $portal-unit;
+    border-radius: $portal-unit;
+    width: 25px;
+    height: 25px;
+    transition-duration: .1s;
+}
