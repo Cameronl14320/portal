@@ -41,11 +41,12 @@ export type pair<T> = {
     second: T
 }
 
-function generateBoard(width: number, height: number): tileState[][] {
+function generateBoard (dimensions: pair<number>): tileState[][] {
+    const { first, second } = dimensions;
     const board: tileState[][] = [];
-    for (let x = 0; x < width; x++) {
+    for (let x = 0; x < first; x++) {
         board.push([]);
-        for (let y = 0; y < height; y++) {
+        for (let y = 0; y < second; y++) {
             board[x].push(tileState.UNSELECTED);
         }
     }
@@ -53,7 +54,7 @@ function generateBoard(width: number, height: number): tileState[][] {
     return board;
 }
 
-function positionsEqual(first: pair<number> | undefined, second: pair<number> | undefined) {
+function positionsEqual (first: pair<number> | undefined, second: pair<number> | undefined) {
     if (!first) {
         return false;
     } else if (!second) {
@@ -62,8 +63,8 @@ function positionsEqual(first: pair<number> | undefined, second: pair<number> | 
     return first.first == second.first && first.second == second.second;
 }
 
-export default function Algorithms(props: parameters) {
-    const {width, height} = props;
+export default function Algorithms (props: parameters) {
+    const [dimensions, setDimensions] = useState<pair<number>>({ first: props.width, second: props.height });
     const [currentState, setCurrentState] = useState<state | undefined>(undefined);
     const [currentBoardState, setCurrentBoardState] = useState<boardState | undefined>(undefined);
     const [displayBoard, setDisplayBoard] = useState<any[][] | null>(null);
@@ -76,9 +77,17 @@ export default function Algorithms(props: parameters) {
         setCurrentBoardState({
             start: undefined,
             end: undefined,
-            board: generateBoard(width, height)
+            board: generateBoard(dimensions)
         });
     }, [])
+
+    useEffect(() => {
+        setCurrentBoardState({
+            start: undefined,
+            end: undefined,
+            board: generateBoard(dimensions)
+        });
+    }, [dimensions])
 
     useEffect(() => {
         const display: any[] = [];
@@ -106,7 +115,7 @@ export default function Algorithms(props: parameters) {
             });
             setDisplayBoard(display);
         }
-    }, [currentBoardState, setCurrentBoardState])
+    }, [currentBoardState])
 
     const updateCurrentBoard = (position: pair<number>) => {
         if (currentBoardState) {
@@ -133,9 +142,24 @@ export default function Algorithms(props: parameters) {
     }
 
     const updateTilePosition = (board: tileState[][], position: pair<number>, newState: tileState): tileState[][] => {
-        let tempBoard = board;
         board[position.first][position.second] = newState;
         return board;
+    }
+
+    const runAlgorithm = (): void => {
+        if (currentState?.running === runningState.WAITING) {
+            if (currentBoardState?.start && currentBoardState.end) {
+                let nextState: state = {
+                    running: runningState.RUNNING,
+                    algorithm: currentState.algorithm
+                }
+                setCurrentState(nextState);
+            } else {
+                alert('Please select a start and/or finish point');
+            }
+        } else {
+            alert('algorithm is already running');
+        }
     }
 
     if (!currentState || !currentBoardState || !displayBoard) {
@@ -146,8 +170,11 @@ export default function Algorithms(props: parameters) {
         );
     }
     return (
-        <div style={{ display: 'flex', flexDirection: 'column'}}>
-            {displayBoard}
+        <div>
+            <button onClick={() => { runAlgorithm() }}>Run function</button>
+            <div style={{ display: 'flex', flexDirection: 'column'}}>
+                {displayBoard}
+            </div>
         </div>
     );
 }
