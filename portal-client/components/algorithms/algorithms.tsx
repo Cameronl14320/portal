@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Djikstras } from "../../data/algorithms/djikstras/djikstras";
-import { algorithms, boardState, tileState } from "../../data/algorithms/search-types";
+import { algorithms, boardState, tileSearchState, tileState } from "../../data/algorithms/search-types";
 import { pair } from "../../data/datatypes";
 import Tile from "./tile";
 
@@ -26,7 +26,10 @@ function generateBoard (dimensions: pair<number>): tileState[][] {
     for (let x = 0; x < first; x++) {
         board.push([]);
         for (let y = 0; y < second; y++) {
-            board[x].push(tileState.UNSELECTED);
+            board[x].push({
+                searchState: tileSearchState.UNSELECTED,
+                previous: undefined
+            });
         }
     }
 
@@ -47,10 +50,6 @@ export default function Algorithms (props: parameters) {
     const [currentState, setCurrentState] = useState<state | undefined>(undefined);
     const [currentBoardState, setCurrentBoardState] = useState<boardState | undefined>(undefined);
     const [displayBoard, setDisplayBoard] = useState<any[][] | null>(null);
-
-    if (currentBoardState) {
-        const thingie = new Djikstras(currentBoardState, props.rows, props.cols);
-    }
 
     useEffect(() => {
         setCurrentState({
@@ -73,6 +72,10 @@ export default function Algorithms (props: parameters) {
     }, [dimensions])
 
     useEffect(() => {
+        if (currentBoardState) {
+            const thingie = new Djikstras(currentBoardState, props.rows, props.cols);
+        }
+
         const display: any[] = [];
         console.log(currentBoardState);
         if (currentBoardState?.board) {
@@ -85,7 +88,7 @@ export default function Algorithms (props: parameters) {
                         <Tile
                             key={ 'algorithms-board-tile-' + rowIndex + '-' + colIndex }
                             position={tilePosition}
-                            state={col}
+                            state={col.searchState}
                             handleClick={updateCurrentBoard}
                             />
                     )
@@ -105,24 +108,25 @@ export default function Algorithms (props: parameters) {
             let tempBoardState = Object.assign({}, currentBoardState);
             if (!tempBoardState?.start && !positionsEqual(tempBoardState.finish, position)) {
                 tempBoardState.start = position;
-                tempBoardState.board = updateTilePosition(tempBoardState.board, position, tileState.START);
+                tempBoardState.board = updateTilePosition(tempBoardState.board, position, tileSearchState.START);
             } else if (!tempBoardState?.finish && !positionsEqual(tempBoardState.start, position)) {
                 tempBoardState.finish = position;
-                tempBoardState.board = updateTilePosition(tempBoardState.board, position, tileState.FINISH);
+                tempBoardState.board = updateTilePosition(tempBoardState.board, position, tileSearchState.FINISH);
             } else if (positionsEqual(tempBoardState.start, position)) {
                 tempBoardState.start = undefined;
-                tempBoardState.board = updateTilePosition(tempBoardState.board, position, tileState.UNSELECTED);
+                tempBoardState.board = updateTilePosition(tempBoardState.board, position, tileSearchState.UNSELECTED);
             } else if (positionsEqual(tempBoardState.finish, position)) {
                 tempBoardState.finish = undefined;
-                tempBoardState.board = updateTilePosition(tempBoardState.board, position, tileState.UNSELECTED);
+                tempBoardState.board = updateTilePosition(tempBoardState.board, position, tileSearchState.UNSELECTED);
             }
             setCurrentBoardState(tempBoardState);
         }
     }
 
-    const updateTilePosition = (board: tileState[][], position: pair<number>, newState: tileState): tileState[][] => {
-        board[position.first][position.second] = newState;
-        return board;
+    const updateTilePosition = (board: tileState[][], position: pair<number>, newState: tileSearchState): tileState[][] => {
+        const newBoard: tileState[][] = Object.assign([], board);
+        newBoard[position.first][position.second].searchState = newState;
+        return newBoard;
     }
 
     const runAlgorithm = (): void => {

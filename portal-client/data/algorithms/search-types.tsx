@@ -11,10 +11,15 @@ export type boardState = {
     board: tileState[][]
 }
 
-export enum tileState {
+export enum tileSearchState {
     UNSELECTED = 0,
     START = 1,
     FINISH = 2,
     SEARCHED = 3,
     PATH = 4
 };
+
+export type tileState = {
+    searchState: tileSearchState;
+    previous: pair<number> | undefined;
+}

@@ -1,24 +1,13 @@
 import { pair } from "../../datatypes";
+import { ISearchAlgorithm } from "../ISearchAlgorithm";
 import { getNeighbors } from "../search-helpers";
-import { boardState, tileState } from "../search-types";
+import { boardState, tileSearchState } from "../search-types";
 
-export class Djikstras {
-    private board: tileState[][];
-    private start: pair<number> | undefined;
-    private finish: pair<number> | undefined;
+export class Djikstras extends ISearchAlgorithm {
+    // In order to store entire path
+    // Each visited tile should store the tile it came from, this way we can map backwards from finsh to start
+    step(): tileState[][] {
 
-    constructor (boardState: boardState, private rows: number, private cols: number) {
-        this.board = boardState.board;
-        this.start = boardState.start;
-        this.finish = boardState.finish;
-
-        if (this.start) {
-            getNeighbors({first:rows, second:cols}, this.start);
-        }
-    }
-
-    public step (): tileState[][] {
-        const tempBoard = this.board.slice();
         return [];
     }
 }
