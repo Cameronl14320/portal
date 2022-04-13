@@ -6,7 +6,7 @@ export type Artwork = {
     height: number
 };
 
-export type Dimensions = {
-    width: number,
-    height: number
+export type pair<T> = {
+    first: T,
+    second: T
 };

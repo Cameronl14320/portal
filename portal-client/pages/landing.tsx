@@ -73,7 +73,7 @@ export default function Landing(props: any) {
                     </div>
                 </div>
                 <Stripe backgroundColor={ globalStyles.shadowDark }>
-                    <Algorithms width={10} height={10}></Algorithms>
+                    <Algorithms rows={10} cols={25}></Algorithms>
                 </Stripe>
             </div>
         </div>

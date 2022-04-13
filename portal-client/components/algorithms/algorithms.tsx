@@ -1,18 +1,8 @@
 import { useEffect, useState } from "react";
+import { Djikstras } from "../../data/algorithms/djikstras/djikstras";
+import { algorithms, boardState, tileState } from "../../data/algorithms/search-types";
+import { pair } from "../../data/datatypes";
 import Tile from "./tile";
-
-export enum algorithms {
-    DJIKSTRAS = 0,
-    A_STAR_SEARCH = 1
-};
-
-export enum tileState {
-    UNSELECTED = 0,
-    START = 1,
-    FINISH = 2,
-    SEARCHED = 3,
-    PATH = 4
-};
 
 export enum runningState {
     WAITING = 0,
@@ -21,25 +11,14 @@ export enum runningState {
 };
 
 export type parameters = {
-    width: number;
-    height: number;
+    rows: number;
+    cols: number;
 };
 
 export type state = {
     algorithm: algorithms;
     running: runningState
 };
-
-export type boardState = {
-    start: pair<number> | undefined;
-    end: pair<number> | undefined,
-    board: tileState[][]
-}
-
-export type pair<T> = {
-    first: T,
-    second: T
-}
 
 function generateBoard (dimensions: pair<number>): tileState[][] {
     const { first, second } = dimensions;
@@ -64,10 +43,14 @@ function positionsEqual (first: pair<number> | undefined, second: pair<number> |
 }
 
 export default function Algorithms (props: parameters) {
-    const [dimensions, setDimensions] = useState<pair<number>>({ first: props.width, second: props.height });
+    const [dimensions, setDimensions] = useState<pair<number>>({ first: props.rows, second: props.cols });
     const [currentState, setCurrentState] = useState<state | undefined>(undefined);
     const [currentBoardState, setCurrentBoardState] = useState<boardState | undefined>(undefined);
     const [displayBoard, setDisplayBoard] = useState<any[][] | null>(null);
+
+    if (currentBoardState) {
+        const thingie = new Djikstras(currentBoardState, props.rows, props.cols);
+    }
 
     useEffect(() => {
         setCurrentState({
@@ -76,7 +59,7 @@ export default function Algorithms (props: parameters) {
         });
         setCurrentBoardState({
             start: undefined,
-            end: undefined,
+            finish: undefined,
             board: generateBoard(dimensions)
         });
     }, [])
@@ -84,7 +67,7 @@ export default function Algorithms (props: parameters) {
     useEffect(() => {
         setCurrentBoardState({
             start: undefined,
-            end: undefined,
+            finish: undefined,
             board: generateBoard(dimensions)
         });
     }, [dimensions])
@@ -119,22 +102,18 @@ export default function Algorithms (props: parameters) {
 
     const updateCurrentBoard = (position: pair<number>) => {
         if (currentBoardState) {
-            let tempBoardState = {
-                start: currentBoardState.start,
-                end: currentBoardState.end,
-                board: currentBoardState.board
-            };
-            if (!tempBoardState?.start && !positionsEqual(tempBoardState.end, position)) {
+            let tempBoardState = Object.assign({}, currentBoardState);
+            if (!tempBoardState?.start && !positionsEqual(tempBoardState.finish, position)) {
                 tempBoardState.start = position;
                 tempBoardState.board = updateTilePosition(tempBoardState.board, position, tileState.START);
-            } else if (!tempBoardState?.end && !positionsEqual(tempBoardState.start, position)) {
-                tempBoardState.end = position;
+            } else if (!tempBoardState?.finish && !positionsEqual(tempBoardState.start, position)) {
+                tempBoardState.finish = position;
                 tempBoardState.board = updateTilePosition(tempBoardState.board, position, tileState.FINISH);
             } else if (positionsEqual(tempBoardState.start, position)) {
                 tempBoardState.start = undefined;
                 tempBoardState.board = updateTilePosition(tempBoardState.board, position, tileState.UNSELECTED);
-            } else if (positionsEqual(tempBoardState.end, position)) {
-                tempBoardState.end = undefined;
+            } else if (positionsEqual(tempBoardState.finish, position)) {
+                tempBoardState.finish = undefined;
                 tempBoardState.board = updateTilePosition(tempBoardState.board, position, tileState.UNSELECTED);
             }
             setCurrentBoardState(tempBoardState);
@@ -148,7 +127,7 @@ export default function Algorithms (props: parameters) {
 
     const runAlgorithm = (): void => {
         if (currentState?.running === runningState.WAITING) {
-            if (currentBoardState?.start && currentBoardState.end) {
+            if (currentBoardState?.start && currentBoardState.finish) {
                 let nextState: state = {
                     running: runningState.RUNNING,
                     algorithm: currentState.algorithm

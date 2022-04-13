@@ -1,5 +1,6 @@
 import React from "react";
-import { pair, tileState } from "./algorithms";
+import { tileState } from "../../data/algorithms/search-types";
+import { pair } from "../../data/datatypes";
 import style from './tile.module.scss';
 
 const tileColors = [

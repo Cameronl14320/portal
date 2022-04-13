@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Artwork, Dimensions } from "../../data/datatypes";
+import { Artwork } from "../../data/datatypes";
 import useWindowDimensions from "../../hooks/mediaSize";
 import ArtworkCard from "./artwork/artwork-card";
 import style from './gallery.module.scss';
