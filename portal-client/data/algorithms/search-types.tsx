@@ -6,8 +6,8 @@ export enum algorithms {
 };
 
 export type boardState = {
-    start: pair<number> | undefined;
-    finish: pair<number> | undefined,
+    start: pair<number>;
+    finish: pair<number>,
     board: tileState[][]
 }
 
@@ -21,5 +21,6 @@ export enum tileSearchState {
 
 export type tileState = {
     searchState: tileSearchState;
+    weight: number;
     previous: pair<number> | undefined;
 }

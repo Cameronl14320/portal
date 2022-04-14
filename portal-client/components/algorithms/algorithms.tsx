@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Djikstras } from "../../data/algorithms/djikstras/djikstras";
+import { SearchAlgorithm } from "../../data/algorithms/search-algorithm";
 import { algorithms, boardState, tileSearchState, tileState } from "../../data/algorithms/search-types";
 import { pair } from "../../data/datatypes";
 import Tile from "./tile";
@@ -28,6 +29,7 @@ function generateBoard (dimensions: pair<number>): tileState[][] {
         for (let y = 0; y < second; y++) {
             board[x].push({
                 searchState: tileSearchState.UNSELECTED,
+                weight: 0,
                 previous: undefined
             });
         }
@@ -48,38 +50,30 @@ function positionsEqual (first: pair<number> | undefined, second: pair<number> |
 export default function Algorithms (props: parameters) {
     const [dimensions, setDimensions] = useState<pair<number>>({ first: props.rows, second: props.cols });
     const [currentState, setCurrentState] = useState<state | undefined>(undefined);
-    const [currentBoardState, setCurrentBoardState] = useState<boardState | undefined>(undefined);
+    const [currentBoardState, setCurrentBoardState] = useState<tileState[][]>();
+    const [selectedStart, setSelectedStart] = useState<pair<number> | undefined>(undefined);
+    const [selectedFinish, setSelectedFinish] = useState<pair<number> | undefined>(undefined);
     const [displayBoard, setDisplayBoard] = useState<any[][] | null>(null);
+    const [currentAlgorithm, setCurrentAlgorithm] = useState<SearchAlgorithm | undefined>(undefined);
 
     useEffect(() => {
         setCurrentState({
             algorithm: algorithms.DJIKSTRAS,
             running: runningState.WAITING
         });
-        setCurrentBoardState({
-            start: undefined,
-            finish: undefined,
-            board: generateBoard(dimensions)
-        });
+        setCurrentBoardState(generateBoard(dimensions));
+        setSelectedStart(undefined);
+        setSelectedFinish(undefined);
     }, [])
 
     useEffect(() => {
-        setCurrentBoardState({
-            start: undefined,
-            finish: undefined,
-            board: generateBoard(dimensions)
-        });
+        setCurrentBoardState(generateBoard(dimensions));
     }, [dimensions])
 
     useEffect(() => {
-        if (currentBoardState) {
-            const thingie = new Djikstras(currentBoardState, props.rows, props.cols);
-        }
-
         const display: any[] = [];
-        console.log(currentBoardState);
-        if (currentBoardState?.board) {
-            const currentBoard = currentBoardState.board;
+        if (currentBoardState) {
+            const currentBoard = currentBoardState.slice();
             currentBoard.forEach((row, rowIndex) => {
                 let tempCol: any[] = [];
                 row.forEach((col, colIndex) => {
@@ -105,21 +99,29 @@ export default function Algorithms (props: parameters) {
 
     const updateCurrentBoard = (position: pair<number>) => {
         if (currentBoardState) {
-            let tempBoardState = Object.assign({}, currentBoardState);
-            if (!tempBoardState?.start && !positionsEqual(tempBoardState.finish, position)) {
-                tempBoardState.start = position;
-                tempBoardState.board = updateTilePosition(tempBoardState.board, position, tileSearchState.START);
-            } else if (!tempBoardState?.finish && !positionsEqual(tempBoardState.start, position)) {
-                tempBoardState.finish = position;
-                tempBoardState.board = updateTilePosition(tempBoardState.board, position, tileSearchState.FINISH);
-            } else if (positionsEqual(tempBoardState.start, position)) {
-                tempBoardState.start = undefined;
-                tempBoardState.board = updateTilePosition(tempBoardState.board, position, tileSearchState.UNSELECTED);
-            } else if (positionsEqual(tempBoardState.finish, position)) {
-                tempBoardState.finish = undefined;
-                tempBoardState.board = updateTilePosition(tempBoardState.board, position, tileSearchState.UNSELECTED);
+            let tempBoardState = currentBoardState.slice();
+            let changed = false;
+            if (!selectedStart && !positionsEqual(selectedFinish, position)) {
+                setSelectedStart(position);
+                tempBoardState = updateTilePosition(tempBoardState, position, tileSearchState.START);
+                changed = true;
+            } else if (!selectedFinish && !positionsEqual(selectedStart, position)) {
+                setSelectedFinish(position);
+                tempBoardState = updateTilePosition(tempBoardState, position, tileSearchState.FINISH);
+                changed = true;
+            } else if (positionsEqual(selectedStart, position)) {
+                setSelectedStart(undefined);
+                tempBoardState = updateTilePosition(tempBoardState, position, tileSearchState.UNSELECTED);
+                changed = true;
+            } else if (positionsEqual(selectedFinish, position)) {
+                setSelectedFinish(undefined);
+                tempBoardState = updateTilePosition(tempBoardState, position, tileSearchState.UNSELECTED);
+                changed = true;
             }
-            setCurrentBoardState(tempBoardState);
+
+            if (changed) {
+                setCurrentBoardState(tempBoardState);
+            }
         }
     }
 
@@ -131,17 +133,35 @@ export default function Algorithms (props: parameters) {
 
     const runAlgorithm = (): void => {
         if (currentState?.running === runningState.WAITING) {
-            if (currentBoardState?.start && currentBoardState.finish) {
-                let nextState: state = {
+            if (selectedStart && selectedStart) {
+                setCurrentState({
                     running: runningState.RUNNING,
                     algorithm: currentState.algorithm
+                });
+
+                if (currentBoardState && selectedStart && selectedFinish) {
+                    if (currentState.algorithm === algorithms.DJIKSTRAS) {
+                        const boardState = {
+                            board: currentBoardState,
+                            start: selectedStart,
+                            finish: selectedFinish
+                        }
+                        setCurrentAlgorithm(new Djikstras(boardState, dimensions));
+                    } else if (currentState.algorithm === algorithms.A_STAR_SEARCH) {
+                        console.log('rip, not implemented yet');
+                    }
                 }
-                setCurrentState(nextState);
             } else {
                 alert('Please select a start and/or finish point');
             }
         } else {
             alert('algorithm is already running');
+        }
+    }
+
+    const stepAlgorithm = (): void => {
+        if (currentAlgorithm) {
+            currentAlgorithm.step();
         }
     }
 
@@ -152,9 +172,15 @@ export default function Algorithms (props: parameters) {
             </div>
         );
     }
+
+    let stepButton;
+    if (!!currentAlgorithm && currentState.running === runningState.RUNNING) {
+        stepButton = <button onClick={() => stepAlgorithm()}>Step</button>
+    }
     return (
         <div>
             <button onClick={() => { runAlgorithm() }}>Run function</button>
+            {stepButton}
             <div style={{ display: 'flex', flexDirection: 'column'}}>
                 {displayBoard}
             </div>

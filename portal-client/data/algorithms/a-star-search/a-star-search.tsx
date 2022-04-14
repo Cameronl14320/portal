@@ -1,8 +1,8 @@
 import { pair } from "../../datatypes";
-import { ISearchAlgorithm } from "../ISearchAlgorithm";
-import { boardState, tileSearchState } from "../search-types";
+import { SearchAlgorithm } from "../search-algorithm";
+import { boardState, tileSearchState, tileState } from "../search-types";
 
-export class AStarSearch extends ISearchAlgorithm {
+export class AStarSearch extends SearchAlgorithm {
 
     step(): tileState[][] {
         return [];
