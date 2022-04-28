@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { AStarSearch } from "../../data/algorithms/a-star-search/a-star-search";
 import { Djikstras } from "../../data/algorithms/djikstras/djikstras";
 import { SearchAlgorithm } from "../../data/algorithms/search-algorithm";
 import { algorithms, boardState, tileSearchState, tileState } from "../../data/algorithms/search-types";
@@ -58,13 +59,7 @@ export default function Algorithms (props: parameters) {
     const [currentAlgorithm, setCurrentAlgorithm] = useState<SearchAlgorithm | undefined>(undefined);
 
     useEffect(() => {
-        setCurrentState({
-            algorithm: algorithms.DJIKSTRAS,
-            running: runningState.WAITING
-        });
-        setCurrentBoardState(generateBoard(dimensions));
-        setSelectedStart(undefined);
-        setSelectedFinish(undefined);
+        resetAlgorithm();
     }, [])
 
     useEffect(() => {
@@ -149,7 +144,12 @@ export default function Algorithms (props: parameters) {
                         }
                         setCurrentAlgorithm(new Djikstras(boardState, dimensions));
                     } else if (currentState.algorithm === algorithms.A_STAR_SEARCH) {
-                        console.log('rip, not implemented yet');
+                        const boardState = {
+                            board: currentBoardState,
+                            start: selectedStart,
+                            finish: selectedFinish
+                        }
+                        setCurrentAlgorithm(new AStarSearch(boardState, dimensions));
                     }
                 }
             } else {
@@ -157,6 +157,18 @@ export default function Algorithms (props: parameters) {
             }
         } else {
             alert('algorithm is already running');
+        }
+    }
+
+    const setAlgorithm = (algo: algorithms): void => {
+        if (currentState) {
+            if (currentState.running === runningState.WAITING) {
+                const nextState = {
+                    ...currentState,
+                    algorithm: algo
+                }
+                setCurrentState(nextState);
+            }
         }
     }
 
@@ -178,6 +190,16 @@ export default function Algorithms (props: parameters) {
         }
     }
 
+    const resetAlgorithm = (): void => {
+        setCurrentState({
+            algorithm: algorithms.DJIKSTRAS,
+            running: runningState.WAITING
+        });
+        setCurrentBoardState(generateBoard(dimensions));
+        setSelectedStart(undefined);
+        setSelectedFinish(undefined);
+    }
+
     if (!currentState || !currentBoardState || !displayBoard) {
         return (
             <div>
@@ -186,14 +208,30 @@ export default function Algorithms (props: parameters) {
         );
     }
 
-    let stepButton;
-    if (!!currentAlgorithm && currentState.running === runningState.RUNNING) {
-        stepButton = <button onClick={() => stepAlgorithm()}>Step</button>
+    let running;
+    if (currentState.running === runningState.WAITING) {
+        running = (
+            <div>
+                <button onClick={() => setAlgorithm(algorithms.DJIKSTRAS)}>DJIKSTRAS</button>
+                <button onClick={() => setAlgorithm(algorithms.A_STAR_SEARCH)}>A STAR SEARCH</button>
+            </div>
+        )
+    } else if (!!currentAlgorithm && currentState.running === runningState.RUNNING) {
+        running = <button onClick={() => stepAlgorithm()}>Step</button>
+    } else if (currentState.running === runningState.FINISHED) {
+        running = <button onClick={() => resetAlgorithm()}>Reset</button>
+    }
+    let currentAlgo;
+    if (currentState.algorithm === algorithms.A_STAR_SEARCH) {
+        currentAlgo = <div style={{color: 'white'}}>A Star Search is selected</div>;
+    } else if (currentState.algorithm === algorithms.DJIKSTRAS) {
+        currentAlgo = <div style={{color: 'white'}}>Djikstras is selected</div>;
     }
     return (
         <div>
             <button onClick={() => { runAlgorithm() }}>Run function</button>
-            {stepButton}
+            {running}
+            {currentAlgo}
             <div style={{ display: 'flex', flexDirection: 'column'}}>
                 {displayBoard}
             </div>

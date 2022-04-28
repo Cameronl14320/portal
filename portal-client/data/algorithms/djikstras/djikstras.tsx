@@ -24,7 +24,18 @@ export class Djikstras extends SearchAlgorithm {
             this.addNeighbors(current.position);
             nextBoard[current.position.first][current.position.second] = current;
         }
-        console.log(this);
         return nextBoard;
+    }
+
+    protected addNeighbors(addFrom: pair<number>) {
+        getNeighbors(this.dimensions, addFrom).forEach(neighbor => {
+            const neighborTile = this.board[neighbor.first][neighbor.second];
+            const cloneTile = { ...neighborTile };
+            if (cloneTile.searchState !== tileSearchState.SEARCHED && cloneTile.searchState !== tileSearchState.START && !this.neighbors.contains(cloneTile.position)) {
+                cloneTile.weight = calculateDistance(this.start, neighbor);
+                cloneTile.previous = addFrom;
+                this.neighbors.push(cloneTile);
+            }
+        });
     }
 }
