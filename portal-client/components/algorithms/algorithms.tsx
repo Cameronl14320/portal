@@ -218,8 +218,6 @@ export default function Algorithms (props: parameters) {
         )
     } else if (!!currentAlgorithm && currentState.running === runningState.RUNNING) {
         running = <button onClick={() => stepAlgorithm()}>Step</button>
-    } else if (currentState.running === runningState.FINISHED) {
-        running = <button onClick={() => resetAlgorithm()}>Reset</button>
     }
     let currentAlgo;
     if (currentState.algorithm === algorithms.A_STAR_SEARCH) {
@@ -229,7 +227,10 @@ export default function Algorithms (props: parameters) {
     }
     return (
         <div>
-            <button onClick={() => { runAlgorithm() }}>Run function</button>
+            <div>
+                <button onClick={() => runAlgorithm()}>Run function</button>
+                <button onClick={() => resetAlgorithm()}>Reset</button>
+            </div>
             {running}
             {currentAlgo}
             <div style={{ display: 'flex', flexDirection: 'column'}}>
