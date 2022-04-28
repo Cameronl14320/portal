@@ -4,7 +4,7 @@ import { pair } from "../../data/datatypes";
 import style from './tile.module.scss';
 
 const tileColors = [
-    'white', 'green', 'red', 'blue'
+    'white', 'green', 'red', 'blue', 'gold'
 ]
 
 export default function Tile(props: {position: pair<number>, state: tileSearchState, handleClick: (position: pair<number>) => void}) {

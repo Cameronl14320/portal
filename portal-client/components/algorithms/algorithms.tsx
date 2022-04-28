@@ -161,8 +161,20 @@ export default function Algorithms (props: parameters) {
     }
 
     const stepAlgorithm = (): void => {
-        if (currentAlgorithm) {
-            setCurrentBoardState(currentAlgorithm.step());
+        if (currentAlgorithm && currentState && currentBoardState && selectedStart && selectedFinish) {
+            if (currentState.running === runningState.RUNNING) {
+                const nextBoard = currentAlgorithm.step();
+                if (nextBoard[selectedFinish.first][selectedFinish.second].previous) {
+                    setCurrentState({
+                        ...currentState,
+                        running: runningState.FINISHED
+                    });
+                    const finalBoard = currentAlgorithm.findPath(nextBoard);
+                    setCurrentBoardState(finalBoard);
+                } else {
+                    setCurrentBoardState(nextBoard);
+                }
+            }
         }
     }
 

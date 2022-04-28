@@ -1,4 +1,4 @@
-import { tileState } from "./algorithms/search-types";
+import { tileSearchState, tileState } from "./algorithms/search-types";
 import { pair } from "./datatypes";
 
 export default class PriorityQueue {
@@ -34,6 +34,12 @@ export default class PriorityQueue {
 
     public sort (): void {
         this.queue.sort((a, b) => {
+            if (a.searchState === tileSearchState.FINISH) {
+                return -1;
+            }
+            if (b.searchState === tileSearchState.FINISH) {
+                return -1;
+            }
             if (a.weight < b.weight) {
                 return -1;
             }

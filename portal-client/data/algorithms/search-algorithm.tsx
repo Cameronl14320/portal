@@ -29,6 +29,29 @@ export abstract class SearchAlgorithm {
             }
         });
     }
+
+    public findPath(board: tileState[][]): tileState[][] {
+        const state = board.slice();
+        let backtrack = state[this.finish.first][this.finish.second];
+        console.log('finish', backtrack);
+        console.log('start', this.start);
+        while (backtrack.previous) {
+            backtrack = state[backtrack.previous.first][backtrack.previous.second];
+            const position = backtrack.position;
+            console.log('backtrack', position);
+            console.log('start', this.start);
+            console.log(position.first);
+            console.log(this.start.first);
+            console.log(position.second);
+            console.log(this.start.second);
+            if (!(position.first == this.start.first && position.second == this.start.second)) {
+                console.log('correction happens here');
+                state[backtrack.position.first][backtrack.position.second].searchState = tileSearchState.PATH;
+            }
+        }
+        console.log(state);
+        return state;
+    }
     // private tileFromPosition (position: pair<number>): tileState {
 
     // }
