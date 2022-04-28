@@ -29,10 +29,9 @@ export function getNeighbors(dimensions: pair<number>, tile: pair<number>): pair
             }
         }
     });
-    console.log(neighbors);
     return neighbors;
 };
 
 export function calculateDistance (firstTile: pair<number>, secondTile: pair<number>): number {
-    return Math.abs(firstTile.first - secondTile.first + firstTile.second - secondTile.second);
+    return Math.abs(firstTile.first - secondTile.first) + Math.abs(firstTile.second - secondTile.second);
 }

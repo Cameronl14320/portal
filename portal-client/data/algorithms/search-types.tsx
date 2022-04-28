@@ -21,6 +21,7 @@ export enum tileSearchState {
 
 export type tileState = {
     searchState: tileSearchState;
+    position: pair<number>;
     weight: number;
     previous: pair<number> | undefined;
 }

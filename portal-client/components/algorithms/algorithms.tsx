@@ -29,6 +29,7 @@ function generateBoard (dimensions: pair<number>): tileState[][] {
         for (let y = 0; y < second; y++) {
             board[x].push({
                 searchState: tileSearchState.UNSELECTED,
+                position: {first: x, second: y},
                 weight: 0,
                 previous: undefined
             });
@@ -161,7 +162,7 @@ export default function Algorithms (props: parameters) {
 
     const stepAlgorithm = (): void => {
         if (currentAlgorithm) {
-            currentAlgorithm.step();
+            setCurrentBoardState(currentAlgorithm.step());
         }
     }
 

@@ -1,4 +1,5 @@
 import { tileState } from "./algorithms/search-types";
+import { pair } from "./datatypes";
 
 export default class PriorityQueue {
     private queue: tileState[] = [];
@@ -19,6 +20,16 @@ export default class PriorityQueue {
 
     public size (): number {
         return this.queue.length;
+    }
+
+    public contains (check: pair<number>): boolean {
+        let result = false;
+        this.queue.forEach(tile => {
+            if (check.first == tile.position.first && check.second == tile.position.second) {
+                result = true;
+            }
+        });
+        return result;
     }
 
     public sort (): void {

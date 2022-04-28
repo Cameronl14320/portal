@@ -9,18 +9,24 @@ export class Djikstras extends SearchAlgorithm {
     step(): tileState[][] {
         // Init
         if (this.neighbors.size() < 1) {
-            getNeighbors(this.dimensions, this.start).forEach(neighbor => {
-                const neighborTile = this.board[neighbor.first][neighbor.second];
-                if (neighborTile.searchState !== tileSearchState.SEARCHED) {
-                    neighborTile.weight = calculateDistance(this.start, neighbor);
-                    neighborTile.previous = this.start;
-                    this.neighbors.push(this.board[neighbor.first][neighbor.second]);
-                }
-            });
+            this.addNeighbors(this.start);
         }
         // Search
-        // Check if finish is within neighbors
+        const next = this.neighbors.pop();
+        const nextBoard = this.board.slice();
+        if (next) {
+            if (next.searchState === tileSearchState.FINISH) {
+                return this.board;
+            }
+
+            const current = {
+                ...next,
+                searchState: tileSearchState.SEARCHED
+            };
+            this.addNeighbors(current.position);
+            nextBoard[current.position.first][current.position.second] = current;
+        }
         console.log(this);
-        return [];
+        return nextBoard;
     }
 }
