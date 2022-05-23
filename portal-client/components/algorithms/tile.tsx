@@ -12,7 +12,7 @@ export default function Tile(props: {position: pair<number>, state: tileSearchSt
         <div
             className={style.container}
             onClick={() => props.handleClick(props.position)}
-            style={{ backgroundColor: tileColors[props.state]}}>
+            style={{ backgroundColor: tileColors[props.state] }}>
         </div>
     )
 }

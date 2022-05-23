@@ -233,7 +233,7 @@ export default function Algorithms (props: parameters) {
             </div>
             {running}
             {currentAlgo}
-            <div style={{ display: 'flex', flexDirection: 'column'}}>
+            <div style={{ display: 'grid'}}>
                 {displayBoard}
             </div>
         </div>
