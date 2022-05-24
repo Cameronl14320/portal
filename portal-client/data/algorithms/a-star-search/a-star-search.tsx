@@ -7,24 +7,30 @@ export class AStarSearch extends SearchAlgorithm {
     // In order to store entire path
     // Each visited tile should store the tile it came from, this way we can map backwards from finsh to start
     public step(): tileState[][] {
-        // Init
-        if (this.neighbors.size() < 1) {
-            this.addNeighbors(this.start);
-        }
-        // Search
-        const next = this.neighbors.pop();
-        const nextBoard = this.board.slice();
-        if (next) {
-            const current = {
-                ...next,
-            };
-            if (current.searchState !== tileSearchState.FINISH) {
-                current.searchState = tileSearchState.SEARCHED
+        if (this.state !== 'FINISHED') {
+            // Init
+            if (this.neighbors.size() < 1) {
+                this.state = 'RUNNING';
+                this.addNeighbors(this.start);
             }
-            this.addNeighbors(current.position);
-            nextBoard[current.position.first][current.position.second] = current;
+            // Search
+            const next = this.neighbors.pop();
+            const nextBoard = this.board.slice();
+            if (next) {
+                const current = {
+                    ...next,
+                };
+                if (current.searchState !== tileSearchState.FINISH) {
+                    current.searchState = tileSearchState.SEARCHED
+                } else {
+                    this.state = 'FINISHED';
+                }
+                this.addNeighbors(current.position);
+                nextBoard[current.position.first][current.position.second] = current;
+            }
+            return nextBoard;
         }
-        return nextBoard;
+        return this.board;
     }
 
     protected addNeighbors(addFrom: pair<number>) {

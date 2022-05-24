@@ -1,0 +1,8 @@
+@import '../../styles/styles.module.scss';
+
+.container {
+    border-radius: $portal-unit;
+    overflow: hidden;
+    cursor: pointer;
+    background-color: aqua;
+}

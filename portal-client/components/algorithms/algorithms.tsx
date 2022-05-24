@@ -4,6 +4,7 @@ import { Djikstras } from "../../data/algorithms/djikstras/djikstras";
 import { SearchAlgorithm } from "../../data/algorithms/search-algorithm";
 import { algorithms, boardState, tileSearchState, tileState } from "../../data/algorithms/search-types";
 import { pair } from "../../data/datatypes";
+import Button from "../button/button";
 import Tile from "./tile";
 
 export enum runningState {
@@ -155,6 +156,8 @@ export default function Algorithms (props: parameters) {
             } else {
                 alert('Please select a start and/or finish point');
             }
+        } else if (currentState?.running === runningState.FINISHED) {
+            resetAlgorithm();
         } else {
             alert('algorithm is already running');
         }
@@ -176,15 +179,24 @@ export default function Algorithms (props: parameters) {
         if (currentAlgorithm && currentState && currentBoardState && selectedStart && selectedFinish) {
             if (currentState.running === runningState.RUNNING) {
                 const nextBoard = currentAlgorithm.step();
-                if (nextBoard[selectedFinish.first][selectedFinish.second].previous) {
+                setCurrentBoardState(nextBoard);
+                if (currentAlgorithm.state === 'FINISHED') {
                     setCurrentState({
                         ...currentState,
                         running: runningState.FINISHED
                     });
                     const finalBoard = currentAlgorithm.findPath(nextBoard);
                     setCurrentBoardState(finalBoard);
-                } else {
-                    setCurrentBoardState(nextBoard);
+                }
+            }
+        }
+    }
+
+    const finishAlgorithm = (): void => {
+        if (currentAlgorithm && currentState && currentBoardState && selectedStart && selectedFinish) {
+            if (currentState.running === runningState.RUNNING) {
+                while (currentAlgorithm.state !== 'FINISHED') {
+                    stepAlgorithm();
                 }
             }
         }
@@ -217,7 +229,12 @@ export default function Algorithms (props: parameters) {
             </div>
         )
     } else if (!!currentAlgorithm && currentState.running === runningState.RUNNING) {
-        running = <button onClick={() => stepAlgorithm()}>Step</button>
+        running = (
+            <div>
+                <button onClick={() => stepAlgorithm()}>Step</button>
+                <button onClick={() => finishAlgorithm()}>Finish</button>
+            </div>
+        )
     }
     let currentAlgo;
     if (currentState.algorithm === algorithms.A_STAR_SEARCH) {
@@ -230,6 +247,9 @@ export default function Algorithms (props: parameters) {
             <div>
                 <button onClick={() => runAlgorithm()}>Run function</button>
                 <button onClick={() => resetAlgorithm()}>Reset</button>
+                <div style={{width: '100px'}}>
+                <Button>Test</Button>
+                </div>
             </div>
             {running}
             {currentAlgo}

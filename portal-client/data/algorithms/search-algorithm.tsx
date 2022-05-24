@@ -8,12 +8,14 @@ export abstract class SearchAlgorithm {
     protected start: pair<number>;
     protected finish: pair<number>;
     protected neighbors: PriorityQueue;
+    public state: 'IDLE' | 'RUNNING' | 'FINISHED';
 
     constructor (boardState: boardState, protected dimensions: pair<number>) {
         this.board = boardState.board;
         this.start = boardState.start;
         this.finish = boardState.finish;
         this.neighbors = new PriorityQueue();
+        this.state = 'IDLE';
     }
 
     abstract step(): tileState[][];
